@@ -13,6 +13,7 @@ import {
   addWeeks,
   GROCERIES_BUDGET,
   MISC_BUDGET,
+  RENT_CONTRIBUTION_WEEKLY,
   RUNWAY_START,
   fmt,
   fmtSigned,
@@ -97,6 +98,22 @@ function CategoryRow({
       </div>
       <ProgressBar value={spent} max={budget} color={over ? 'bg-crimson' : 'bg-teal'} />
       <span className="text-xs text-gray-400 mt-1 block">Budget: {fmt(budget)}</span>
+    </div>
+  );
+}
+
+function FixedCostRow({ label, amount }: { label: string; amount: number }) {
+  return (
+    <div className="py-3 first:pt-0 last:pb-0">
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-semibold text-navy">{label}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold text-navy">{fmt(amount)}</span>
+          <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-400">
+            fixed
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -217,6 +234,7 @@ export default function Dashboard({ data, currentWeekStart, viewingWeekStart, on
           <CategoryRow label="Groceries & Eating Out" spent={data.groceries} budget={GROCERIES_BUDGET} />
           <CategoryRow label="Transit" spent={data.transit} budget={transitBudget} />
           <CategoryRow label="Misc" spent={data.misc} budget={MISC_BUDGET} />
+          <FixedCostRow label="Rent contribution" amount={RENT_CONTRIBUTION_WEEKLY} />
         </div>
       </section>
 

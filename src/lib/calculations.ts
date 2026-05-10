@@ -10,6 +10,7 @@ export const TRANSIT_BUDGET_DISCOUNT = 25;
 export const MISC_BUDGET = 50;
 export const FIXED_SUBS = 92;
 export const RENT_GAP = 550;
+export const RENT_CONTRIBUTION_WEEKLY = 150;
 export const RUNWAY_START = 37000;
 export const MONTHLY_BURN = 2000;
 
@@ -45,7 +46,7 @@ export function getTotalSpent(data: WeeklyData): number {
 }
 
 export function getWeeklySurplus(data: WeeklyData): number {
-  return getWeeklyIncome(data) - getTotalSpent(data);
+  return getWeeklyIncome(data) - getTotalSpent(data) - RENT_CONTRIBUTION_WEEKLY;
 }
 
 export function getMonthlyIncome(weeklyIncome: number): number {
@@ -53,7 +54,7 @@ export function getMonthlyIncome(weeklyIncome: number): number {
 }
 
 export function getMonthlySurplus(weeklyIncome: number, transitDiscount: boolean): number {
-  const weeklyExpenses = GROCERIES_BUDGET + getTransitBudget(transitDiscount) + MISC_BUDGET;
+  const weeklyExpenses = GROCERIES_BUDGET + getTransitBudget(transitDiscount) + MISC_BUDGET + RENT_CONTRIBUTION_WEEKLY;
   return getMonthlyIncome(weeklyIncome) - (weeklyExpenses * WEEKS_PER_MONTH + FIXED_SUBS + RENT_GAP);
 }
 
